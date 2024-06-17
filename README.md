@@ -68,7 +68,7 @@ Find the required transaction data in the pregenerated instructions. You can sub
 1. Clone the GitHub Repository and navigate to the `/claim-instructions` directory:
     - Run the following command in the terminal
     ```
-    git clone https://github.com/ZKsync-Association/zknation-data.git && cd claim-instructions
+    git clone https://github.com/ZKsync-Association/zknation-data.git && cd zknation-data/claim-instructions
     ```
 2. Generate Transaction Parameters:
     - Install dependencies and run the script to generate L2 contract claim transaction parameters:
@@ -80,7 +80,7 @@ Find the required transaction data in the pregenerated instructions. You can sub
 
 #### Claiming Process:
 
-1. Use the [block explorer](https://era.zksync.network/address/0x3999ca03F309AC41eC6dDE30FE9f73798Ae5675e#writeContract) frontend or suitable wallet interfaces that support contract interactions.
+1. Use the [block explorer](https://era.zksync.network/address/0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4#writeContract) frontend or suitable wallet interfaces that support contract interactions.
 2. Execute the contract call with the generated calldata.
 
 For example, if you are using Safe mutltisig, you can craft the transaction using the raw calldata in the Transaction Builder:
@@ -98,7 +98,7 @@ To claim tokens for an L1 contract, you need to first generate calldata. Unlike 
 1. Clone the GitHub Repository and navigate to the `/claim-instructions` directory:
     - Run the following command in the terminal
     ```
-    git clone https://github.com/ZKsync-Association/zknation-data.git cd claim-instructions
+    git clone https://github.com/ZKsync-Association/zknation-data.git cd zknation-data/claim-instructions
     ```
 2. Generate Transaction Parameters:
     - Install dependencies and run the script to generate L1 contract claim transaction parameters:
