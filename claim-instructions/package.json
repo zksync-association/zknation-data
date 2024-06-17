@@ -1,0 +1,23 @@
+{
+  "name": "claim-instructions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "csv-parse": "^5.5.6",
+    "ethers": "^6.13.0",
+    "merkletreejs": "^0.3.11",
+    "node": "^22.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "zksync-ethers": "^6.8.0"
+  },
+  "scripts": {
+    "generate-l2-contract-claim-tx": "ts-node src/main.ts generate-l2-contract-claim-tx",
+    "generate-l1-contract-claim-tx": "ts-node src/main.ts generate-l1-contract-claim-tx"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2"
+  }
+}
