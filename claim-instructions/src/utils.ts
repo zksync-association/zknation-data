@@ -5,6 +5,12 @@ import * as fs from "fs";
 import { utils } from "zksync-ethers";
 import { MerkleTree } from "merkletreejs";
 
+export interface Allocation {
+    allEligible: string[][],
+    l1Eligible: string[][],
+    l2MerkleDistributorAddress: string
+}
+
 export function readInterface(path: string) {
     const abi = JSON.parse(fs.readFileSync(path, { encoding: 'utf-8' }));
     return new ethers.Interface(abi);
@@ -32,6 +38,21 @@ export function readCSV(filePath: string): Promise<string[][]> {
     });
 }
 
+export async function readAllocationsAndL1EligibilityLists(allEligiblePath: string[], l1EligiblePath: string[], l2MerkleDistributorAddresses: string[]): Promise<Allocation[]> {
+    let result = new Array();
+    if (allEligiblePath.length !== l1EligiblePath.length || l1EligiblePath.length !== l2MerkleDistributorAddresses.length) {
+        throw new Error("Mismatch between the number of eligibility lists and the L1 addresses list!");
+    }
+    for (let i = 0; i < allEligiblePath.length; ++i) {
+        result.push({
+            allEligible: await readCSV(allEligiblePath[i]),
+            l1Eligible: await readCSV(l1EligiblePath[i]),
+            l2MerkleDistributorAddress: l2MerkleDistributorAddresses[i]
+        });
+    }
+    return result;
+}
+
 export function constructMerkleTree(addresses: string[][], l1SmartContractAddresses: string[][]) {
     for (let i = 0; i < addresses.length; i++) {
         for (let j = 0; j < l1SmartContractAddresses.length; j++) {
@@ -56,6 +77,6 @@ export function constructMerkleTree(addresses: string[][], l1SmartContractAddres
     const leavesBuffs = leaves.sort((a, b) => Buffer.compare(a.hashBuffer, b.hashBuffer));
     const tree = new MerkleTree(leavesBuffs.map((leaf) => leaf.hashBuffer), ethers.keccak256, { sortPairs: true });
 
-    return {leavesBuffs, tree};
+    return { leaves: leavesBuffs, tree };
 }
 

@@ -15,7 +15,8 @@
   },
   "scripts": {
     "generate-l2-contract-claim-tx": "ts-node src/main.ts generate-l2-contract-claim-tx",
-    "generate-l1-contract-claim-tx": "ts-node src/main.ts generate-l1-contract-claim-tx"
+    "generate-l1-contract-claim-tx": "ts-node src/main.ts generate-l1-contract-claim-tx",
+    "generate-l1-contract-transfer-tx": "ts-node src/main.ts generate-l1-contract-transfer-tx"
   },
   "devDependencies": {
     "@types/node": "^20.14.2"

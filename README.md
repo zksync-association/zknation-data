@@ -78,9 +78,13 @@ Find the required transaction data in the pregenerated instructions. You can sub
 
 ![alt text](instructions-l2.png)
 
+*Note*: The script return the array of claim transactions for each eligible distribution. If the address is eligible for only one distribution you will get one transaction instruction.
+
 #### Claiming Process:
 
-1. Use the [block explorer](https://era.zksync.network/address/0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4#writeContract) frontend or suitable wallet interfaces that support contract interactions.
+1. Use the block explorer frontend or suitable wallet interfaces that support contract interactions:
+    - [Merkle Distributor Wave 1](https://era.zksync.network/address/0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4#writeContract) 
+    - [Merkle Distributor Wave 2](https://era.zksync.network/address/0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d#writeContract) 
 2. Execute the contract call with the generated calldata.
 
 For example, if you are using Safe mutltisig, you can craft the transaction using the raw calldata in the Transaction Builder:
@@ -89,9 +93,11 @@ For example, if you are using Safe mutltisig, you can craft the transaction usin
 
 ## L1 Smart Contracts Addresses
 
-If you are claiming from an L1 multisig, L1 DAO contract address, or other L1 smart contract address, you need to make an L1 transaction by following these steps:
+All eligible L1 addresses can claim through an L1 to L2 transaction requests and later control claimed funds. For those who want to use a more user-friendly L2 account, follow this two-step instruction to claim and then transfer to the specified L2 address:
 
 #### Contract Call Preparation:
+
+##### 1. Claim tokens transaction
 
 To claim tokens for an L1 contract, you need to first generate calldata. Unlike L2 execution, L1 to L2 calldata and the price for the transaction execution depend on network conditions. Therefore, use the provided script to generate the transaction parameters.
 
@@ -105,10 +111,28 @@ To claim tokens for an L1 contract, you need to first generate calldata. Unlike 
     ```
     yarn && yarn generate-l1-contract-claim-tx <address> [--l1-gas-price] [--l1-json-rpc]
     ```
-    - `l1-gas-price` should be not less than the L1 gas price when transaction will be executed.
-    - `l1-json-rpc` - optional parameter to specify L1 node RPC.
+    - `l1-gas-price` - Ethereum gas price, should be set to not less than the L1 gas price expected at the time of transaction execution.
+    - `l1-json-rpc` - An optional parameter to specify the L1 node RPC URL.
 
 ![alt text](instructions-l1.png)
+
+*Note*: The script return the array of claim transactions for each eligible distribution. If the address is eligible for only one distribution you will get one transaction instruction.
+
+##### 2. Transfer tokens to the specified address transaction
+
+To transfer your claimed tokens to L2 account or another specified address, follow these steps to generate and execute the transfer transaction:
+
+1. Generate Transaction Parameters:
+    - Install dependencies and run the script to generate L1 contract claim transaction parameters:
+    ```
+    yarn && yarn generate-l1-contract-transfer-tx [--to] [--amount] [--l1-gas-price] [--l1-json-rpc]
+    ```
+    - `to` - The L2 recipient address for the ZK token transfer.
+    - `amount` - The amount to be transferred, specified in raw format (not decimal). For example, to transfer 1 ZK token, if the token has 18 decimals, you should input 1000000000000000000.
+    - `l1-gas-price` - Ethereum gas price, should be set to not less than the L1 gas price expected at the time of transaction execution.
+    - `l1-json-rpc` - An optional parameter to specify the L1 node RPC URL.
+
+![alt text](instructions-l1-transfer.png)
 
 #### CLI Output Description:
 
@@ -130,3 +154,5 @@ When you run the script, the CLI will output the following data:
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
 
 ![alt text](etherscan.png)
+
+*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the instructions.
