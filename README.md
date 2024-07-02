@@ -85,9 +85,10 @@ Find the required transaction data in the pregenerated instructions. You can sub
 1. Use the block explorer frontend or suitable wallet interfaces that support contract interactions:
     - [Merkle Distributor Wave 1](https://era.zksync.network/address/0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4#writeContract) 
     - [Merkle Distributor Wave 2](https://era.zksync.network/address/0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d#writeContract) 
+    - [Merkle Distributor Wave 3](https://era.zksync.network/address/0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b#writeContract) 
 2. Execute the contract call with the generated calldata.
 
-For example, if you are using Safe mutltisig, you can craft the transaction using the raw calldata in the Transaction Builder:
+For example, if you are using Safe multisig, you can craft the transaction using the raw calldata in the Transaction Builder:
 
 ![alt text](safe.png)
 
