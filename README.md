@@ -98,6 +98,18 @@ All eligible L1 addresses can claim through an L1 to L2 transaction requests and
 
 ### Contract Call Preparation:
 
+#### CLI Output Description:
+
+When you run the scripts, the CLI will output the following data:
+
+- `address`: The address which claims.
+- `to`: The address to call on L1.
+- `function`: The name of the smart contract function to call.
+- `params`: A JSON object detailing the transaction parameters and specifying the function to call.
+- `l1_raw_calldata`: The calldata to be sent with the transaction.
+- `value`: The amount in wei to send with the transaction.
+- `gas_price`: The minimum gas price in wei to send transaction with.
+
 #### 1. Claim tokens transaction
 
 To claim tokens for an L1 contract, you need to first generate calldata. Unlike L2 execution, L1 to L2 calldata and the price for the transaction execution depend on network conditions. Therefore, use the provided script to generate the transaction parameters.
@@ -112,7 +124,7 @@ To claim tokens for an L1 contract, you need to first generate calldata. Unlike 
     ```
     yarn && yarn generate-l1-contract-claim-tx <address> [--l1-gas-price] [--l1-json-rpc]
     ```
-    - `l1-gas-price` - Ethereum gas price (gwei), should be set to not less than the L1 gas price expected at the time of transaction execution.
+    - `l1-gas-price` - Ethereum gas price in gwei, should be set to not less than the L1 gas price expected at the time of transaction execution.
     - `l1-json-rpc` - An optional parameter to specify the L1 node RPC URL.
 
 ![alt text](instructions-l1.png)
@@ -122,15 +134,27 @@ To claim tokens for an L1 contract, you need to first generate calldata. Unlike 
 #### Claiming Process:
 
 1. Use the [block explorer](https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#writeProxyContract) frontend or suitable wallet interfaces that support contract interactions.
-2. Execute the contract call with the generated calldata.
+2. In the interface, fill out the function `requestL2TransactionDirect` with the following parameters from the generated output.
+*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
+3. Execute the contract call with the generated calldata.
 
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
+- Outputs from example above
+        - `payableAmount (ether)` - 0.006640981334032384
+        - `chainId` - 324
+        - `mintValue` - 6640981334032384
+        - `l2Contract` - 0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d
+        - `l2Value` - 0
+        - `l2Calldata` - 0xae0b51df0000000000...bb2c0e [shortened for this example]
+        - `l2GasLimit` - 2097152
+        - `l2GasPerPubdataByteLimit` - 800
+        - `factoryDeps` - []
+        - `refundRecipient` - 0xa6ab726be0c2048f7a063fd01160af8f0b749fd2
+
 
 ![alt text](etherscan.png)
 
-*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the instructions.
-
-##### 2. Transfer tokens to the specified address transaction
+#### 2. Transfer tokens to the specified address transaction
 
 To transfer your claimed tokens to L2 account or another specified address, follow these steps to generate and execute the transfer transaction:
 
@@ -141,30 +165,29 @@ To transfer your claimed tokens to L2 account or another specified address, foll
     ```
     - `to` - The L2 recipient address for the ZK token transfer.
     - `amount` - The amount to be transferred, specified in raw format (not decimal). For example, to transfer 1 ZK token, if the token has 18 decimals, you should input 1000000000000000000.
-    - `l1-gas-price` - Ethereum gas price, should be set to not less than the L1 gas price expected at the time of transaction execution.
+    - `l1-gas-price` - Ethereum gas price in gwei, should be set to not less than the L1 gas price expected at the time of transaction execution.
     - `l1-json-rpc` - An optional parameter to specify the L1 node RPC URL.
 
 ![alt text](instructions-l1-transfer.png)
 
-#### CLI Output Description:
-
-When you run the script, the CLI will output the following data:
-
-- `address`: The address which claims.
-- `to`: The address to call on L1.
-- `function`: The name of the smart contract function to call.
-- `params`: A JSON object detailing the transaction parameters and specifying the function to call.
-- `l1_raw_calldata`: The calldata to be sent with the transaction.
-- `value`: The amount in wei to send with the transaction.
-- `gas_price`: The minimum gas price to send transaction with.
-
 #### Transfer Process:
 
 1. Use the [block explorer](https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#writeProxyContract) frontend or suitable wallet interfaces that support contract interactions.
-2. Execute the contract call with the generated calldata.
+2. In the interface, fill out the function `requestL2TransactionDirect` with the following parameters from the generated output.
+*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
+3. Execute the contract call with the generated calldata.
 
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
+- Outputs from example above
+        - `payableAmount (ether)` - 0.006640981334032384
+        - `chainId` - 324
+        - `mintValue` - 6640981334032384
+        - `l2Contract` - 0x5a7d6b2f92c77fad6ccabd7ee062464907eaf3e
+        - `l2Value` - 0
+        - `l2Calldata` - 0xa9059cbb0000000000...3a7640000 [shortened for this example]
+        - `l2GasLimit` - 2097152
+        - `l2GasPerPubdataByteLimit` - 800
+        - `factoryDeps` - []
+        - `refundRecipient` - 0x0000000000000000000000000000000000000000
 
 ![alt text](etherscan.png)
-
-*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the instructions.
