@@ -140,16 +140,16 @@ To claim tokens for an L1 contract, you need to first generate calldata. Unlike 
 
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
 - Outputs from example above
-  - `payableAmount (ether)` - 0.006640981334032384
-  - `chainId` - 324
-  - `mintValue` - 6640981334032384
-  - `l2Contract` - 0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d
-  - `l2Value` - 0
-  - `l2Calldata` - 0xae0b51df0000000000...bb2c0e [shortened for this example]
-  - `l2GasLimit` - 2097152
-  - `l2GasPerPubdataByteLimit` - 800
-  - `factoryDeps` - []
-  - `refundRecipient` - 0xa6ab726be0c2048f7a063fd01160af8f0b749fd2
+    - `payableAmount (ether)` - 0.006640981334032384
+    - `chainId` - 324
+    - `mintValue` - 6640981334032384
+    - `l2Contract` - 0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d
+    - `l2Value` - 0
+    - `l2Calldata` - 0xae0b51df0000000000...bb2c0e [shortened for this example]
+    - `l2GasLimit` - 2097152
+    - `l2GasPerPubdataByteLimit` - 800
+    - `factoryDeps` - []
+    - `refundRecipient` - 0xa6ab726be0c2048f7a063fd01160af8f0b749fd2
 
 ![alt text](etherscan.png)
 
@@ -178,15 +178,15 @@ To transfer your claimed tokens to L2 account or another specified address, foll
 
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
 - Outputs from example above
-  - `payableAmount (ether)` - 0.006640981334032384
-  - `chainId` - 324
-  - `mintValue` - 6640981334032384
-  - `l2Contract` - 0x5a7d6b2f92c77fad6ccabd7ee062464907eaf3e
-  - `l2Value` - 0
-  - `l2Calldata` - 0xa9059cbb0000000000...3a7640000 [shortened for this example]
-  - `l2GasLimit` - 2097152
-  - `l2GasPerPubdataByteLimit` - 800
-  - `factoryDeps` - []
-  - `refundRecipient` - 0x0000000000000000000000000000000000000000
+    - `payableAmount (ether)` - 0.006640981334032384
+    - `chainId` - 324
+    - `mintValue` - 6640981334032384
+    - `l2Contract` - 0x5a7d6b2f92c77fad6ccabd7ee062464907eaf3e
+    - `l2Value` - 0
+    - `l2Calldata` - 0xa9059cbb0000000000...3a7640000 [shortened for this example]
+    - `l2GasLimit` - 2097152
+    - `l2GasPerPubdataByteLimit` - 800
+    - `factoryDeps` - []
+    - `refundRecipient` - 0x0000000000000000000000000000000000000000
 
 ![alt text](etherscan.png)
