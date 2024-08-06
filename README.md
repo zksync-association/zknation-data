@@ -135,7 +135,6 @@ To claim tokens for an L1 contract, you need to first generate calldata. Unlike 
 
 1. Use the [block explorer](https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#writeProxyContract) frontend or suitable wallet interfaces that support contract interactions.
 2. In the interface, fill out the function `requestL2TransactionDirect` with the following parameters from the generated output.
-*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
 3. Execute the contract call with the generated calldata and the eligible address.
 
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
@@ -145,12 +144,13 @@ For example, if you connect your wallet on Etherscan, you can call the contract 
     - `mintValue` - 6640981334032384
     - `l2Contract` - 0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d
     - `l2Value` - 0
-    - `l2Calldata` - 0xae0b51df0000000000...bb2c0e [shortened for this example]
+    - `l2Calldata` - 0xae0b51df0000000000...bb2c0e *[shortened for this example]*
     - `l2GasLimit` - 2097152
     - `l2GasPerPubdataByteLimit` - 800
     - `factoryDeps` - []
     - `refundRecipient` - 0xa6ab726be0c2048f7a063fd01160af8f0b749fd2
 
+*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
 ![alt text](etherscan.png)
 
 #### 2. Transfer tokens to the specified address transaction
@@ -173,7 +173,6 @@ To transfer your claimed tokens to L2 account or another specified address, foll
 
 1. Use the [block explorer](https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#writeProxyContract) frontend or suitable wallet interfaces that support contract interactions.
 2. In the interface, fill out the function `requestL2TransactionDirect` with the following parameters from the generated output.
-*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
 3. Execute the contract call with the generated calldata and the eligible address.
 
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
@@ -183,10 +182,11 @@ For example, if you connect your wallet on Etherscan, you can call the contract 
     - `mintValue` - 6640981334032384
     - `l2Contract` - 0x5a7d6b2f92c77fad6ccabd7ee062464907eaf3e
     - `l2Value` - 0
-    - `l2Calldata` - 0xa9059cbb0000000000...3a7640000 [shortened for this example]
+    - `l2Calldata` - 0xa9059cbb0000000000...3a7640000 *[shortened for this example]*
     - `l2GasLimit` - 2097152
     - `l2GasPerPubdataByteLimit` - 800
     - `factoryDeps` - []
     - `refundRecipient` - 0x0000000000000000000000000000000000000000
 
+*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
 ![alt text](etherscan.png)
