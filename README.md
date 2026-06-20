@@ -83,9 +83,9 @@ Find the required transaction data in the pregenerated instructions. You can sub
 #### Claiming Process:
 
 1. Use the block explorer frontend or suitable wallet interfaces that support contract interactions:
-    - [Merkle Distributor Wave 1](https://era.zksync.network/address/0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4#writeContract) 
-    - [Merkle Distributor Wave 2](https://era.zksync.network/address/0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d#writeContract) 
-    - [Merkle Distributor Wave 3](https://era.zksync.network/address/0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b#writeContract) 
+    - [Merkle Distributor Wave 1](https://era.zksync.network/address/0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4#writeContract)
+    - [Merkle Distributor Wave 2](https://era.zksync.network/address/0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d#writeContract)
+    - [Merkle Distributor Wave 3](https://era.zksync.network/address/0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b#writeContract)
 2. Execute the contract call with the generated calldata.
 
 For example, if you are using Safe multisig, you can craft the transaction using the raw calldata in the Transaction Builder:
@@ -96,30 +96,64 @@ For example, if you are using Safe multisig, you can craft the transaction using
 
 All eligible L1 addresses can claim through an L1 to L2 transaction requests and later control claimed funds. For those who want to use a more user-friendly L2 account, follow this two-step instruction to claim and then transfer to the specified L2 address:
 
-#### Contract Call Preparation:
+### Contract Call Preparation:
 
-##### 1. Claim tokens transaction
+#### CLI Output Description:
+
+When you run the scripts, the CLI will output the following data:
+
+- `address`: The address which claims.
+- `to`: The address to call on L1.
+- `function`: The name of the smart contract function to call.
+- `params`: A JSON object detailing the transaction parameters and specifying the function to call.
+- `l1_raw_calldata`: The calldata to be sent with the transaction.
+- `value`: The amount in wei to send with the transaction.
+- `gas_price`: The minimum gas price in wei to send transaction with.
+
+#### 1. Claim tokens transaction
 
 To claim tokens for an L1 contract, you need to first generate calldata. Unlike L2 execution, L1 to L2 calldata and the price for the transaction execution depend on network conditions. Therefore, use the provided script to generate the transaction parameters.
 
 1. Clone the GitHub Repository and navigate to the `/claim-instructions` directory:
     - Run the following command in the terminal
     ```
-    git clone https://github.com/ZKsync-Association/zknation-data.git cd zknation-data/claim-instructions
+    git clone https://github.com/ZKsync-Association/zknation-data.git && cd zknation-data/claim-instructions
     ```
 2. Generate Transaction Parameters:
     - Install dependencies and run the script to generate L1 contract claim transaction parameters:
     ```
     yarn && yarn generate-l1-contract-claim-tx <address> [--l1-gas-price] [--l1-json-rpc]
     ```
-    - `l1-gas-price` - Ethereum gas price, should be set to not less than the L1 gas price expected at the time of transaction execution.
+    - `l1-gas-price` - Ethereum gas price in gwei, should be set to not less than the L1 gas price expected at the time of transaction execution.
     - `l1-json-rpc` - An optional parameter to specify the L1 node RPC URL.
 
 ![alt text](instructions-l1.png)
 
 *Note*: The script return the array of claim transactions for each eligible distribution. If the address is eligible for only one distribution you will get one transaction instruction.
 
-##### 2. Transfer tokens to the specified address transaction
+#### Claiming Process:
+
+1. Use the [block explorer](https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#writeProxyContract) frontend or suitable wallet interfaces that support contract interactions.
+2. In the interface, fill out the function `requestL2TransactionDirect` with the following parameters from the generated output.
+3. Execute the contract call with the generated calldata and the eligible address.
+
+For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
+- Outputs from example above
+    - `payableAmount (ether)` - 0.006640981334032384
+    - `chainId` - 324
+    - `mintValue` - 6640981334032384
+    - `l2Contract` - 0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d
+    - `l2Value` - 0
+    - `l2Calldata` - 0xae0b51df0000000000...bb2c0e *[shortened for this example]*
+    - `l2GasLimit` - 2097152
+    - `l2GasPerPubdataByteLimit` - 800
+    - `factoryDeps` - []
+    - `refundRecipient` - 0xa6ab726be0c2048f7a063fd01160af8f0b749fd2
+
+*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
+![alt text](etherscan.png)
+
+#### 2. Transfer tokens to the specified address transaction
 
 To transfer your claimed tokens to L2 account or another specified address, follow these steps to generate and execute the transfer transaction:
 
@@ -130,30 +164,29 @@ To transfer your claimed tokens to L2 account or another specified address, foll
     ```
     - `to` - The L2 recipient address for the ZK token transfer.
     - `amount` - The amount to be transferred, specified in raw format (not decimal). For example, to transfer 1 ZK token, if the token has 18 decimals, you should input 1000000000000000000.
-    - `l1-gas-price` - Ethereum gas price, should be set to not less than the L1 gas price expected at the time of transaction execution.
+    - `l1-gas-price` - Ethereum gas price in gwei, should be set to not less than the L1 gas price expected at the time of transaction execution.
     - `l1-json-rpc` - An optional parameter to specify the L1 node RPC URL.
 
 ![alt text](instructions-l1-transfer.png)
 
-#### CLI Output Description:
-
-When you run the script, the CLI will output the following data:
-
-- `address`: The address which claims.
-- `to`: The address to call on L1.
-- `function`: The name of the smart contract function to call.
-- `params`: A JSON object detailing the transaction parameters and specifying the function to call.
-- `l1_raw_calldata`: The calldata to be sent with the transaction.
-- `value`: The amount in wei to send with the transaction.
-- `gas_price`: The minimum gas price to send transaction with.
-
-#### Claiming Process:
+#### Transfer Process:
 
 1. Use the [block explorer](https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#writeProxyContract) frontend or suitable wallet interfaces that support contract interactions.
-2. Execute the contract call with the generated calldata.
+2. In the interface, fill out the function `requestL2TransactionDirect` with the following parameters from the generated output.
+3. Execute the contract call with the generated calldata and the eligible address.
 
 For example, if you connect your wallet on Etherscan, you can call the contract directly from the UI:
+- Outputs from example above
+    - `payableAmount (ether)` - 0.006640981334032384
+    - `chainId` - 324
+    - `mintValue` - 6640981334032384
+    - `l2Contract` - 0x5a7d6b2f92c77fad6ccabd7ee062464907eaf3e
+    - `l2Value` - 0
+    - `l2Calldata` - 0xa9059cbb0000000000...3a7640000 *[shortened for this example]*
+    - `l2GasLimit` - 2097152
+    - `l2GasPerPubdataByteLimit` - 800
+    - `factoryDeps` - []
+    - `refundRecipient` - 0x0000000000000000000000000000000000000000
 
+*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the output converted from wei to ether.
 ![alt text](etherscan.png)
-
-*Note*: `payableAmount` means the ether amount to send with the transaction, which should be equal to the `value` field from the instructions.
